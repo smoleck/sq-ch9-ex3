@@ -2,6 +2,7 @@ package com.example.sq_ch9_ex3.components;
 
 
 import com.example.sq_ch9_ex3.services.LoggedUserManagementService;
+import com.example.sq_ch9_ex3.services.LoginCountService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
@@ -10,15 +11,20 @@ import org.springframework.web.context.annotation.RequestScope;
 public class LoginProcessor {
 
     private final LoggedUserManagementService loggedUserManagementService;
+    private final LoginCountService loginCountService;
+
 
     private String username;
     private String password;
 
-    public LoginProcessor(LoggedUserManagementService loggedUserManagementService) {
+    public LoginProcessor(LoggedUserManagementService loggedUserManagementService,
+                          LoginCountService loginCountService) {
         this.loggedUserManagementService = loggedUserManagementService;
+        this.loginCountService = loginCountService;
     }
 
     public boolean login(){
+
         String username = this.getUsername();
         String password = this.getPassword();
 
@@ -27,6 +33,7 @@ public class LoginProcessor {
         if ("natalie".equals(username)&&"password".equals(password)){
             loginResult=true;
             loggedUserManagementService.setUsername(username);
+            loginCountService.increment();
         }
 
         return loginResult;
