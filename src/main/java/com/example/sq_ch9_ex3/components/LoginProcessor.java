@@ -27,13 +27,13 @@ public class LoginProcessor {
 
         String username = this.getUsername();
         String password = this.getPassword();
-
+        loginCountService.increment();
 
         boolean loginResult=false;
         if ("natalie".equals(username)&&"password".equals(password)){
             loginResult=true;
             loggedUserManagementService.setUsername(username);
-            loginCountService.increment();
+
         }
 
         return loginResult;
